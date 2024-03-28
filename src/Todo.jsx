@@ -1,6 +1,5 @@
 import {useState} from "react";
 import Button from "./Button.jsx";
-import Input from "./Input.jsx";
 import PropTypes from "prop-types";
 import {FaRegEdit} from "react-icons/fa";
 import {FaTrashAlt} from "react-icons/fa";
@@ -8,44 +7,71 @@ import {IoIosSave} from "react-icons/io";
 import {FaCalendarAlt} from "react-icons/fa";
 import {MdDateRange} from "react-icons/md";
 import Calendar from "react-calendar";
-import 'react-calendar/dist/Calendar.css';
-import Popup from 'reactjs-popup';
-import 'reactjs-popup/dist/index.css';
+import "react-calendar/dist/Calendar.css";
+import Popup from "reactjs-popup";
 
-
-const Todo = ({todo, onDelete, onEdit, isEditing, onEditSave}) => {
+const Todo = ({
+                  todo,
+                  onDelete,
+                  onEdit,
+                  isEditing,
+                  onEditSave,
+              }) => {
     const [editedText, setEditedText] = useState(todo);
-    const [showCalendar, setShowCalendar] = useState(false);
-    const [selectedDate, setSelectedDate] = useState(new Date()); // Nouvel état pour stocker la date sélectionnée
+    const [setShowCalendar] = useState(false);
+    const [selectedDate, setSelectedDate] = useState(new Date());
+    const [isChecked, setIsChecked] = useState(false);
 
     const setCalendar = () => {
-        setShowCalendar(prevShowCalendar => !prevShowCalendar);
-    }
+        setShowCalendar((prevShowCalendar) => !prevShowCalendar);
+    };
 
     const handleDateChange = (date) => {
-        setSelectedDate(date); // Met à jour la date sélectionnée
-        setShowCalendar(false); // Cache le calendrier après la sélection de la date
-    }
+        setSelectedDate(date);
+        setShowCalendar(false);
+    };
+
     const handleEditChange = (event) => {
-        setEditedText(event.target.value); // Met à jour le texte modifié
+        setEditedText(event.target.value);
     };
 
     const handleSaveClick = () => {
         onEditSave(editedText);
     };
 
+    const handleCheckboxChange = () => {
+        setIsChecked(!isChecked);
+    };
+
     return (
         <div className="todo-wrapper">
             {isEditing ? (
                 <>
-                    <Input type="Modifier" value={editedText} className="save-input" onChange={handleEditChange}/>
+                    <input
+                        id="editInput"
+                        type="text"
+                        value={editedText}
+                        className="save-input"
+                        placeholder={"Modifier la tâche"}
+                        onChange={handleEditChange}
+                    />
                     <Button onClick={handleSaveClick}>
                         <IoIosSave/>
                     </Button>
                 </>
             ) : (
                 <>
-                    <span className="todo-text">{todo}</span>
+                    <div className="todo-checkbox">
+                        <input
+                            className="checkbox-todo"
+                            type="checkbox"
+                            onClick={handleCheckboxChange}
+                        />
+                    </div>
+
+                    <span className={`todo-text ${isChecked ? "checked" : ""}`}>
+            {todo}
+          </span>
                     <div className="todo-button">
                         <Button onClick={onEdit}>
                             <FaRegEdit/>
@@ -53,22 +79,23 @@ const Todo = ({todo, onDelete, onEdit, isEditing, onEditSave}) => {
                         <Button onClick={onDelete}>
                             <FaTrashAlt/>
                         </Button>
-                        <Popup trigger={<Button onClick={setCalendar}>
-                            <FaCalendarAlt/>
-                        </Button>} position="center">
-                            {showCalendar && <Calendar onChange={handleDateChange}
-                                                       value={selectedDate}/>}
+
+                        <Popup trigger={<Button onClick={setCalendar}><FaCalendarAlt/></Button>} modal nested>
+                            {(close) => (
+                                <div className="modal">
+                                    <button className="close" onClick={close}>&times;</button>
+                                    <div className="header"> Calendrier</div>
+                                    <div className="content">
+                                        <Calendar onChange={handleDateChange} value={selectedDate}/>
+                                    </div>
+                                </div>
+                            )}
                         </Popup>
-
-
                     </div>
                     <div className="todo-date">
                         <MdDateRange/>
-                        <p className="date-list">
-                            {selectedDate.toLocaleDateString()}</p>
+                        <p className="date-list">{selectedDate.toLocaleDateString()}</p>
                     </div>
-
-
                 </>
             )}
         </div>

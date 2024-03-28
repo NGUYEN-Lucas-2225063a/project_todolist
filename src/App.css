@@ -1,122 +1,147 @@
-#root {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 2rem;
-    text-align: center;
+:root {
+    margin: 0;
+    padding: 0;
 }
 
-Input {
-    margin: 10px;
-    padding: 10px;
-    border-radius: 10px;
-    box-shadow: #1a1a1a 5px 5px 10px;
-}
-
-button {
-    flex-direction: row;
-    margin: 10px;
-    padding: 10px;
-    border-radius: 10px;
-
+body {
+    display: flex;
+    justify-content: center;
 }
 
 .App {
-    border-radius: 20px;
-    padding: 1rem;
-    box-shadow: #1a1a1a 10px 10px 20px;
-    width: 700px;
-}
-
-h3 {
     display: flex;
-    justify-content: center;
-    padding: 5px;
-    background-color: #1a1a1a;
-    border-radius: 5px;
-    box-shadow: #1a1a1a 5px 5px 15px;
-}
-
-
-ul {
-    margin: 0px;
-    padding: 0px;
-}
-
-.ligne {
-    display: flex;
-    justify-content: center;
-    flex-direction: row;
-    margin: 10px;
-    padding: 10px;
-    border-radius: 10px;
+    flex-direction: column;
+    align-items: center;
     box-shadow: #1a1a1a 5px 5px 10px;
-
+    border-radius: 10px;
+    padding: 20px;
 }
 
 .form-wrapper {
     display: flex;
-    justify-content: center;
-    margin: 5px;
-    padding: 5px;
-    box-shadow: #1a1a1a 5px 5px 10px;
-}
-
-.todo-wrapper,
-.todo-text {
-    display: flex;
-    justify-content: center;
-    margin: 5px;
-    padding: 8px;
-    box-shadow: #1a1a1a 5px 5px 10px;
-}
-
-.todo-text {
-    display: flex;
-    justify-content: center;
-    margin: 10px;
+    justify-content: left;
     padding: 10px;
-    box-shadow: #1a1a1a 5px 5px 10px;
-    border-radius: 5px;
-    border: 2px solid white;
+    margin: 5px;
+    gap: 15px;
 }
 
-.button-span {
-    display: block;
-    margin: 15px;
-    padding: 15px;
-    position: relative;
-    left: 50px;
+input#todo {
+    font-size: 1.2em;
+    font-weight: 600;
+    padding: 10px;
+    border-radius: 15px;
+    border: 5px solid black;
+
+}
+
+
+.todo-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    flex-direction: row;
+    padding: 10px;
+    margin: 10px;
+    gap: 20px;
+    box-shadow: #1a1a1a 5px 5px 10px;
+    border-radius: 30px;
+    border: 2px solid white;
 
 }
 
 .todo-button {
     display: flex;
     justify-content: center;
+    gap: 20px;
+    height: 60px;
+
 
 }
 
+.todo-text {
+    margin-left: 5px;
+    font-size: 1.5em;
+    font-weight: 600;
+}
+
+.todo-text.checked {
+    text-decoration: line-through;
+    color: grey;
+}
 
 .todo-date {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-left: 10px;
+    border-radius: 15px;
+    gap: 10px;
+    background-color: white;
+    color: black;
+    margin: 5px;
+    padding: 6px;
+}
+
+p.date-list {
+    font-size: 1em;
+    font-weight: 800;
+}
+
+.modal {
+    font-size: 12px;
+    background-color: black;
+}
+.modal > .header {
+    width: 100%;
+    font-size: 18px;
+    text-align: center;
+    padding: 5px;
+}
+.modal > .content {
+    width: 100%;
+    padding: 10px 5px;
+}
+.modal > .actions {
+    width: 100%;
+    padding: 10px 5px;
+    margin: auto;
+    text-align: center;
+}
+.modal > .close {
+    cursor: pointer;
+    position: absolute;
+    display: block;
+    padding: 5px 10px;
+    line-height: 20px;
+    right: -1px;
+    top: -30px;
+    font-size: 24px;
+    background: #ffffff;
     border-radius: 10px;
+    border: 1px solid #cfcece;
 }
 
-.date-list {
-    margin-left: 5px;
+.checkbox-todo {
+    display: block;
+    justify-content: left;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
 }
 
+.save-input {
+    display: flex;
+    justify-content: center;
+    border: 2px solid black;
+    border-radius: 15px;
+    height: 25px;
+    padding: 5px;
+    margin: 5px;
+    width: 300px;
+}
 
-
-
-
-
-
-
-
-
-
-
+.todo-edit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
