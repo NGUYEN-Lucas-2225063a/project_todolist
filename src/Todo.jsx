@@ -1,11 +1,11 @@
-import {useState} from "react";
+import { useState, useEffect } from "react";
 import Button from "./Button.jsx";
 import PropTypes from "prop-types";
-import {FaRegEdit} from "react-icons/fa";
-import {FaTrashAlt} from "react-icons/fa";
-import {IoIosSave} from "react-icons/io";
-import {FaCalendarAlt} from "react-icons/fa";
-import {MdDateRange} from "react-icons/md";
+import { FaRegEdit } from "react-icons/fa";
+import { FaTrashAlt } from "react-icons/fa";
+import { IoIosSave } from "react-icons/io";
+import { FaCalendarAlt } from "react-icons/fa";
+import { MdDateRange } from "react-icons/md";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import Popup from "reactjs-popup";
@@ -19,8 +19,15 @@ const Todo = ({
               }) => {
     const [editedText, setEditedText] = useState(todo);
     const [setShowCalendar] = useState(false);
-    const [selectedDate, setSelectedDate] = useState(new Date());
+    const [selectedDate, setSelectedDate] = useState(() => {
+        const savedDate = localStorage.getItem("selectedDate");
+        return savedDate ? new Date(savedDate) : new Date();
+    });
     const [isChecked, setIsChecked] = useState(false);
+
+    useEffect(() => {
+        localStorage.setItem("selectedDate", selectedDate);
+    }, [selectedDate]);
 
     const setCalendar = () => {
         setShowCalendar((prevShowCalendar) => !prevShowCalendar);
@@ -28,6 +35,7 @@ const Todo = ({
 
     const handleDateChange = (date) => {
         setSelectedDate(date);
+        localStorage.setItem("selectedDate", date); // Sauvegarde de la nouvelle date dans le localStorage
         setShowCalendar(false);
     };
 
@@ -56,7 +64,7 @@ const Todo = ({
                         onChange={handleEditChange}
                     />
                     <Button onClick={handleSaveClick}>
-                        <IoIosSave/>
+                        <IoIosSave />
                     </Button>
                 </>
             ) : (
@@ -74,26 +82,26 @@ const Todo = ({
           </span>
                     <div className="todo-button">
                         <Button onClick={onEdit}>
-                            <FaRegEdit/>
+                            <FaRegEdit />
                         </Button>
                         <Button onClick={onDelete}>
-                            <FaTrashAlt/>
+                            <FaTrashAlt />
                         </Button>
 
-                        <Popup trigger={<Button onClick={setCalendar}><FaCalendarAlt/></Button>} modal nested>
+                        <Popup trigger={<Button onClick={setCalendar}><FaCalendarAlt /></Button>} modal nested>
                             {(close) => (
                                 <div className="modal">
                                     <button className="close" onClick={close}>&times;</button>
                                     <div className="header"> Calendrier</div>
                                     <div className="content">
-                                        <Calendar onChange={handleDateChange} value={selectedDate}/>
+                                        <Calendar onChange={handleDateChange} value={selectedDate} />
                                     </div>
                                 </div>
                             )}
                         </Popup>
                     </div>
                     <div className="todo-date">
-                        <MdDateRange/>
+                        <MdDateRange />
                         <p className="date-list">{selectedDate.toLocaleDateString()}</p>
                     </div>
                 </>
@@ -108,7 +116,6 @@ Todo.propTypes = {
     onEdit: PropTypes.func.isRequired,
     isEditing: PropTypes.bool.isRequired,
     onEditSave: PropTypes.func.isRequired,
-    onCalendar: PropTypes.func.isRequired,
 };
 
 export default Todo;
